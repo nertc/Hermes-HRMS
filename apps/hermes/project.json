@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/hermes",
         "index": "apps/hermes/src/index.html",
@@ -13,8 +15,14 @@
         "polyfills": "apps/hermes/src/polyfills.ts",
         "tsConfig": "apps/hermes/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/hermes/src/favicon.ico", "apps/hermes/src/assets"],
-        "styles": ["apps/hermes/src/styles.scss"],
+        "assets": [
+          "apps/hermes/src/favicon.ico",
+          "apps/hermes/src/assets"
+        ],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/hermes/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -74,12 +82,17 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/hermes/**/*.ts", "apps/hermes/**/*.html"]
+        "lintFilePatterns": [
+          "apps/hermes/**/*.ts",
+          "apps/hermes/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/hermes"],
+      "outputs": [
+        "coverage/apps/hermes"
+      ],
       "options": {
         "jestConfig": "apps/hermes/jest.config.ts",
         "passWithNoTests": true
