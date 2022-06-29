@@ -1,0 +1,29 @@
+<hermes-background [rectangles]="10"></hermes-background>
+<form [formGroup]="loginForm">
+  <hermes-logo></hermes-logo>
+  <mat-form-field appearance="outline">
+    <mat-label>Username</mat-label>
+    <input type="text" matInput formControlName="username" />
+    <mat-error *ngIf="usernameControl.hasError('required')">
+      Username is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput formControlName="password" />
+    <mat-error *ngIf="passwordControl.hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-error *ngIf="message$ | async as message">
+    {{ message }}
+  </mat-error>
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!!(loginForm.invalid || (message$ | async))"
+    (click)="login()"
+  >
+    Log in
+  </button>
+</form>

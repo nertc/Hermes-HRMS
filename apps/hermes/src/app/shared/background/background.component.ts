@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
 } from '@angular/core';
+import { Box } from './interfaces/box.interface';
 
 @Component({
   selector: 'hermes-background',
@@ -13,13 +14,13 @@ import {
 })
 export class BackgroundComponent implements OnChanges {
   @Input() rectangles = 0;
-  public boxes: any[] = [];
+  public boxes: Box[] = [];
 
   ngOnChanges(): void {
     this.boxes = new Array(this.rectangles).fill(undefined).map(() => {
       const left = Math.floor(Math.random() * 100) + '%';
       const size = Math.floor(15 + Math.random() * 135) + 'px';
-      const delay = Math.floor(Math.random() * 15) + 's';
+      const delay = -Math.floor(Math.random() * 35) + 's';
       const duration = Math.floor(15 + Math.random() * 35) + 's';
 
       return {
@@ -30,6 +31,5 @@ export class BackgroundComponent implements OnChanges {
         duration,
       };
     });
-    console.log(this.boxes);
   }
 }
