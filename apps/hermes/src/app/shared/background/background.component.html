@@ -1,0 +1,12 @@
+<ul>
+  <li
+    *ngFor="let box of boxes"
+    [ngStyle]="{
+      left: box.left,
+      width: box.width,
+      height: box.height,
+      'animation-delay': box.delay,
+      'animation-duration': box.duration
+    }"
+  ></li>
+</ul>
