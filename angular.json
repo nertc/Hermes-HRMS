@@ -4,6 +4,7 @@
   "projects": {
     "api": "apps/api",
     "hermes": "apps/hermes",
-    "hermes-e2e": "apps/hermes-e2e"
+    "hermes-e2e": "apps/hermes-e2e",
+    "interfaces": "libs/interfaces"
   }
 }
