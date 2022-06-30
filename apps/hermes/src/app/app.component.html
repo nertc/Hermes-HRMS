@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<hermes-background [rectangles]="20"></hermes-background>
+<div class="grid" *ngIf="isLoggedIn$ | async">
+  <div class="header">
+    <hermes-header></hermes-header>
+  </div>
+  <div class="menu" [ngClass]="{ opened: isMenuOpened }">
+    <hermes-menu (openChanged)="setMenuOpen($event)"></hermes-menu>
+  </div>
+  <div class="body">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<router-outlet *ngIf="(isLoggedIn$ | async) === false"></router-outlet>
