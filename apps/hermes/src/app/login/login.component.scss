@@ -22,11 +22,22 @@ form {
   }
 }
 
-hermes-background {
-  position: absolute;
-}
-
 button {
   height: 40px;
   transition: ease 0.5s;
+}
+
+.logo {
+  font-size: 70%;
+}
+
+@media only screen and (min-width: 720px) and (max-width: 1079px) {
+  .logo {
+    font-size: 40%;
+  }
+}
+@media only screen and (max-width: 719px) {
+  .logo {
+    font-size: 20%;
+  }
 }

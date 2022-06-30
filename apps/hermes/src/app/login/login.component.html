@@ -1,6 +1,7 @@
-<hermes-background [rectangles]="10"></hermes-background>
 <form [formGroup]="loginForm">
-  <hermes-logo></hermes-logo>
+  <div class="logo">
+    <hermes-logo></hermes-logo>
+  </div>
   <mat-form-field appearance="outline">
     <mat-label>Username</mat-label>
     <input type="text" matInput formControlName="username" />

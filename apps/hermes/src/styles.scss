@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~@angular/material/theming';
 @import './variables.scss';
 
@@ -10,5 +10,25 @@
   src: url('/assets/fonts/DALEK.ttf'), url('/assets/fonts/DALEK.otf');
 }
 
-html, body { height: 100%;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+
+  border: none;
+
+  position: relative;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
