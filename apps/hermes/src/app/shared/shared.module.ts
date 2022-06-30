@@ -5,9 +5,28 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { LogoComponent } from './logo/logo.component';
 import { BackgroundComponent } from './background/background.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { GetPropertyPipe } from './pipes/get-property.pipe';
+import { StatusPipe } from './pipes/status.pipe';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [LogoComponent, BackgroundComponent],
+  declarations: [
+    LogoComponent,
+    BackgroundComponent,
+    GetPropertyPipe,
+    StatusPipe,
+  ],
   imports: [CommonModule],
   exports: [
     CommonModule,
@@ -17,6 +36,20 @@ import { BackgroundComponent } from './background/background.component';
     MatButtonModule,
     LogoComponent,
     BackgroundComponent,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    GetPropertyPipe,
+    StatusPipe,
+    MatSelectModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    RouterModule,
   ],
 })
 export class SharedModule {}
