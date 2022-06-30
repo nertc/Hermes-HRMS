@@ -1,0 +1,92 @@
+<div class="main-container">
+  <div class="mat-elevation-z8 container">
+    <div class="table">
+      <table mat-table class="full-width-table" matSort aria-label="Elements">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let row">{{ row.userId }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.fullname }}</td>
+        </ng-container>
+
+        <!-- Leave Column -->
+        <ng-container matColumnDef="leave">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave Days</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-form-field appearance="outline">
+              <mat-date-range-input [rangePicker]="picker">
+                <input
+                  disabled
+                  matStartDate
+                  placeholder="Start date"
+                  [value]="row.leave.from"
+                />
+                <input
+                  disabled
+                  matEndDate
+                  placeholder="End date"
+                  [value]="row.leave.to"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker
+                [disabled]="false"
+                #picker
+              ></mat-date-range-picker>
+            </mat-form-field>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Accept Column -->
+        <ng-container matColumnDef="accept">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-mini-fab
+              aria-label="Accept"
+              (click)="accept(row.id)"
+              color="primary"
+            >
+              <mat-icon>check</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Reject Column -->
+        <ng-container matColumnDef="reject">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-mini-fab
+              aria-label="Reject"
+              (click)="reject(row.id)"
+              color="accent"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+      </table>
+    </div>
+
+    <mat-paginator
+      #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</div>

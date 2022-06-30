@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginGuard } from './login/login.guard';
-import { AuthGuard } from './user/auth.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +14,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () =>
       import('./employee/employee.module').then((m) => m.EmployeeModule),
+  },
+  {
+    path: 'leave',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./leave/leave.module').then((m) => m.LeaveModule),
   },
   {
     path: '**',
