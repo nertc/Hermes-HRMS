@@ -1,0 +1,167 @@
+<div class="mat-elevation-z8 container">
+  <div class="filters">
+    <mat-form-field *ngIf="search" appearance="outline">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        placeholder="David Tsiklauri..."
+        [formControl]="searchControl"
+      />
+    </mat-form-field>
+    <button
+      *ngIf="canadd && add"
+      mat-mini-fab
+      aria-label="Add"
+      [routerLink]="['/employee/create']"
+      routerLinkActive="router-link-active"
+      color="basic"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div class="table">
+    <table
+      style="height: 10px"
+      mat-table
+      class="full-width-table"
+      matSort
+      aria-label="Elements"
+    >
+      <!-- Id -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+      </ng-container>
+
+      <!-- Name -->
+      <ng-container matColumnDef="fullname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Full Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.fullname }}</td>
+      </ng-container>
+
+      <!-- Phone -->
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
+        <td mat-cell *matCellDef="let row">{{ row.phone }}</td>
+      </ng-container>
+
+      <!-- Role -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose a role</mat-label>
+            <mat-select
+              [disabled]="!canManipulate(row.role)"
+              [value]="row.role"
+              (selectionChange)="
+                changeRole(row.id, $event.value, $event.source)
+              "
+            >
+              <mat-option
+                *ngFor="let role of canManipulate(row.role) ? roles : allRoles"
+                [value]="role.role"
+                >{{ role.title }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </td>
+
+        <td></td
+      ></ng-container>
+
+      <!-- Total -->
+      <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Days</th>
+        <td mat-cell *matCellDef="let row">{{ row.total }}</td>
+      </ng-container>
+
+      <!-- Leave -->
+      <ng-container matColumnDef="leave">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave Days</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-form-field appearance="outline">
+            <mat-date-range-input [rangePicker]="picker">
+              <input
+                disabled
+                matStartDate
+                placeholder="Start date"
+                [value]="row.leave.from"
+              />
+              <input
+                disabled
+                matEndDate
+                placeholder="End date"
+                [value]="row.leave.to"
+              />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker
+              [disabled]="false"
+              #picker
+            ></mat-date-range-picker>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- Working -->
+      <ng-container matColumnDef="working">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Working Days</th>
+        <td mat-cell *matCellDef="let row">{{ row.working }}</td>
+      </ng-container>
+
+      <!-- Salary -->
+      <ng-container matColumnDef="salary">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.salary }} {{ row.currency }}
+        </td>
+      </ng-container>
+
+      <!-- Attandence -->
+      <ng-container matColumnDef="attandence">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Attandence</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-slide-toggle
+            [disabled]="!canManipulate(row.role)"
+            [checked]="row.attandence"
+            (change)="changeAttandence(row.id, $event.checked, $event.source)"
+            color="primary"
+            >{{ row.attandence ? 'Present' : 'Absent' }}</mat-slide-toggle
+          >
+        </td>
+      </ng-container>
+
+      <!-- Delete -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            *ngIf="canManipulate(row.role)"
+            mat-mini-fab
+            aria-label="Delete"
+            (click)="remove(row.id)"
+            color="basic"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <mat-paginator
+    #paginator
+    [length]="dataSource?.data?.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>
