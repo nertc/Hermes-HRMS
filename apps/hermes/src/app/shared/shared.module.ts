@@ -19,6 +19,34 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { InlineRangeCalendarComponent } from './inline-range-calendar/inline-range-calendar.component';
+
+const exports = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MatInputModule,
+  MatButtonModule,
+  LogoComponent,
+  BackgroundComponent,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  GetPropertyPipe,
+  StatusPipe,
+  MatSelectModule,
+  MatIconModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
+  MatSlideToggleModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatListModule,
+  RouterModule,
+  MatCardModule,
+  InlineRangeCalendarComponent,
+];
 
 @NgModule({
   declarations: [
@@ -26,30 +54,9 @@ import { RouterModule } from '@angular/router';
     BackgroundComponent,
     GetPropertyPipe,
     StatusPipe,
+    InlineRangeCalendarComponent,
   ],
-  imports: [CommonModule],
-  exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    LogoComponent,
-    BackgroundComponent,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    GetPropertyPipe,
-    StatusPipe,
-    MatSelectModule,
-    MatIconModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatSlideToggleModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    RouterModule,
-  ],
+  imports: [CommonModule, MatDatepickerModule],
+  exports: [...exports],
 })
 export class SharedModule {}
