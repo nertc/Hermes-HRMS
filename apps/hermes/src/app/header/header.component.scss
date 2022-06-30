@@ -1,0 +1,25 @@
+hermes-logo {
+  font-size: 40%;
+}
+
+p {
+  font-size: 110%;
+  margin: 0;
+  margin-right: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  background: rgba($color: #fff, $alpha: 0.9);
+  width: 100%;
+  height: 100%;
+}
