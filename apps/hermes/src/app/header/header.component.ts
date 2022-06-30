@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs';
 import { UserService } from '../user/user.service';
+import { HeaderService } from './header.service';
 
 @Component({
   selector: 'hermes-header',
@@ -10,7 +12,14 @@ import { UserService } from '../user/user.service';
 export class HeaderComponent {
   public fullName: string;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private headerService: HeaderService
+  ) {
     this.fullName = userService.getFullName();
+  }
+
+  public logout(): void {
+    this.headerService.logout().pipe(tap(this.userService.logout)).subscribe();
   }
 }

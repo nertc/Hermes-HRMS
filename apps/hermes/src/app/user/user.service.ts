@@ -6,24 +6,35 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
-  private isLoggedIn = true;
+  private isLoggedIn = false;
 
   private $onLoginChange = new BehaviorSubject<boolean>(this.isLoggedIn);
   public onLoginChange$ = this.$onLoginChange.asObservable();
 
-  public firstName = 'David';
-  public lastName = 'Tsiklauri';
-  public status: UserStatus = UserStatus.MANAGER;
+  public id = -1;
+  public firstName = '';
+  public lastName = '';
+  public status = UserStatus.EMPLOYEE;
 
   public getFullName(): string {
     return this.firstName + ' ' + this.lastName;
   }
 
-  public setUser(user: LoginResponse) {
+  public setUser(user: LoginResponse): void {
+    this.id = user.id;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.status = user.status;
     this.isLoggedIn = true;
+    this.$onLoginChange.next(this.isLoggedIn);
+  }
+
+  public logout(): void {
+    this.id = -1;
+    this.firstName = '';
+    this.lastName = '';
+    this.status = UserStatus.EMPLOYEE;
+    this.isLoggedIn = false;
     this.$onLoginChange.next(this.isLoggedIn);
   }
 
@@ -41,5 +52,9 @@ export class UserService {
 
   public isEmployee(): boolean {
     return this.status === UserStatus.EMPLOYEE;
+  }
+
+  public isAtLeast(status: UserStatus): boolean {
+    return this.status >= status;
   }
 }

@@ -420,7 +420,6 @@ export class EmployeeDataSource extends DataSource<EmployeeItem> {
   }
 
   public deleteEmployee(id: number): void {
-    console.log(id);
     this.data = this.data.filter((emp) => emp.id !== id);
     this.dataChanged.emit(true);
   }
