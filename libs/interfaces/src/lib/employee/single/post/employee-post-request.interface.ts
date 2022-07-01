@@ -1,6 +1,6 @@
 export interface EmployeePostRequest {
   firstName: string;
-  lastName: number;
+  lastName: string;
   salary: number;
   phone: string;
 }

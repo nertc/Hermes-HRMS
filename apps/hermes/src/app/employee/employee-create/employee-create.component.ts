@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -11,7 +13,11 @@ import { EmployeeService } from '../employee.service';
 export class EmployeeCreateComponent {
   public employeeForm: FormGroup;
 
-  constructor(fb: FormBuilder, private employeeService: EmployeeService) {
+  constructor(
+    fb: FormBuilder,
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {
     this.employeeForm = fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -27,6 +33,9 @@ export class EmployeeCreateComponent {
   }
 
   public create() {
-    this.employeeService.create(this.employeeForm.value).subscribe();
+    this.employeeService
+      .create(this.employeeForm.value)
+      .pipe(tap(() => this.router.navigate(['/employee'])))
+      .subscribe();
   }
 }

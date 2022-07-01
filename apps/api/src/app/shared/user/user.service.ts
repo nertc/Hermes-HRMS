@@ -1,7 +1,8 @@
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, UpdateQuery } from 'mongoose';
 import { UserDTO } from './models/user-dto.interface';
 import { IUser, UserModel } from './models/user.schema';
 import * as sha256 from 'sha256';
+import { UserPartialDTO } from './models';
 
 export class UserService {
   static async getAll(): Promise<UserDTO[]> {
@@ -66,7 +67,7 @@ export class UserService {
     };
   }
 
-  static async create(user: UserDTO): Promise<UserDTO> {
+  static async create(user: UserPartialDTO): Promise<UserDTO> {
     const newUser = await UserModel.create({
       ...user,
       password: this.encrypt(user.password),
@@ -95,6 +96,29 @@ export class UserService {
       console.log
     );
     return !!deletedUser;
+  }
+
+  static async update(id: string, user: UpdateQuery<IUser>): Promise<UserDTO> {
+    const updatedUser = await UserModel.findByIdAndUpdate(id, user).catch(
+      console.log
+    );
+    if (!updatedUser) {
+      return null;
+    }
+    return {
+      id: updatedUser._id.toString(),
+      firstname: updatedUser.firstname,
+      lastname: updatedUser.lastname,
+      attandence: updatedUser.attandence,
+      leave: updatedUser.leave,
+      username: updatedUser.username,
+      password: updatedUser.password,
+      phone: updatedUser.phone,
+      salary: updatedUser.salary,
+      status: updatedUser.status,
+      total: updatedUser.total,
+      working: updatedUser.working,
+    };
   }
 
   static encrypt(password: string): string {
