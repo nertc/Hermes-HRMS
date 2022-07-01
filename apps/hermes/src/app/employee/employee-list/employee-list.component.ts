@@ -27,7 +27,6 @@ import { FormControl } from '@angular/forms';
   selector: 'hermes-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: MAT_DATE_RANGE_SELECTION_STRATEGY,

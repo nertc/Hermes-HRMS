@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { UserService } from '../user/user.service';
 import { HeaderService } from './header.service';
@@ -14,12 +15,19 @@ export class HeaderComponent {
 
   constructor(
     private userService: UserService,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private router: Router
   ) {
     this.fullName = userService.getFullName();
   }
 
   public logout(): void {
-    this.headerService.logout().pipe(tap(this.userService.logout)).subscribe();
+    this.headerService
+      .logout()
+      .pipe(
+        tap(() => this.userService.logout()),
+        tap(() => this.router.navigate(['/login']))
+      )
+      .subscribe();
   }
 }
