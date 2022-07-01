@@ -1,4 +1,4 @@
-const BASE_URL = '/api/';
+const BASE_URL = 'http://localhost:3333/api/';
 
 const API_URLS = Object.freeze({
   login: BASE_URL + 'login',

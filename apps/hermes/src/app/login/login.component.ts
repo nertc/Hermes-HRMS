@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ErrorMessage } from '@hermes/interfaces';
 import { catchError, mapTo, merge, Observable, of, takeWhile } from 'rxjs';
 import { tap } from 'rxjs';
@@ -21,7 +22,8 @@ export class LoginComponent {
 
   constructor(
     private loginService: LoginService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.usernameControl = new FormControl('', {
       validators: [Validators.required],
@@ -40,7 +42,10 @@ export class LoginComponent {
   public login(): void {
     const login$ = this.loginService
       .login(this.usernameControl.value, this.passwordControl.value)
-      .pipe(tap(this.userService.setUser));
+      .pipe(
+        tap((user) => this.userService.setUser(user)),
+        tap(() => this.router.navigate(['employee']))
+      );
 
     this.message$ = merge(
       this.loginForm.valueChanges.pipe(mapTo('')),
