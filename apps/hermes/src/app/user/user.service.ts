@@ -11,7 +11,7 @@ export class UserService {
   private $onLoginChange = new BehaviorSubject<boolean>(this.isLoggedIn);
   public onLoginChange$ = this.$onLoginChange.asObservable();
 
-  public id = -1;
+  public id = '';
   public firstName = '';
   public lastName = '';
   public status = UserStatus.EMPLOYEE;
@@ -30,7 +30,7 @@ export class UserService {
   }
 
   public logout(): void {
-    this.id = -1;
+    this.id = '';
     this.firstName = '';
     this.lastName = '';
     this.status = UserStatus.EMPLOYEE;
