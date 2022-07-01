@@ -1,0 +1,18 @@
+[
+  {
+    "userId": "62be7830d3b19bb22d3a4f95",
+    "fullname": "David Tsiklauri",
+    "leave": {
+      "from": 1657569600000,
+      "to": 1657915200000
+    }
+  },
+  {
+    "userId": "62be7830d3b19bb22d3a4f97",
+    "fullname": "Lorry Forry",
+    "leave": {
+      "from": 1657569600000,
+      "to": 1657915200000
+    }
+  }
+]
