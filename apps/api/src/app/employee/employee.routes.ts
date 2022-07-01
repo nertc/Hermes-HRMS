@@ -66,6 +66,9 @@ router.put(
       working: user.working,
       ...updateVals,
     };
+    if (user.leave && !updateVals.leave) {
+      respUser.leave = user.leave;
+    }
     res.send(respUser);
   }
 );

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DateRange } from '@angular/material/datepicker';
+import { UserService } from '../../user/user.service';
 import { LeaveService } from '../leave.service';
 
 @Component({
@@ -11,7 +12,10 @@ import { LeaveService } from '../leave.service';
 export class LeaveRequestComponent {
   public date: DateRange<Date> | undefined;
 
-  constructor(private leaveService: LeaveService) {}
+  constructor(
+    private leaveService: LeaveService,
+    private userService: UserService
+  ) {}
 
   public dateChanged(date: DateRange<Date>): void {
     this.date = date;
@@ -25,6 +29,12 @@ export class LeaveRequestComponent {
       from: this.date.start.getTime(),
       to: this.date.end.getTime(),
     };
-    this.leaveService.request(date).subscribe();
+    this.leaveService
+      .request({
+        userId: this.userService.id,
+        fullname: this.userService.getFullName(),
+        leave: date,
+      })
+      .subscribe();
   }
 }

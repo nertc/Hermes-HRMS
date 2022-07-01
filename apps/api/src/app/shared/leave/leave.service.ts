@@ -1,7 +1,7 @@
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { LeaveDTO } from './models/leave-dto.interface';
 import { ILeave, LeaveModel } from './models/leave.schema';
-import * as sha256 from 'sha256';
+import { Leave } from './models';
 
 export class LeaveService {
   static async getAll(): Promise<LeaveDTO[]> {
@@ -42,7 +42,7 @@ export class LeaveService {
     };
   }
 
-  static async create(leave: LeaveDTO): Promise<LeaveDTO> {
+  static async create(leave: Leave): Promise<LeaveDTO> {
     const newLeave = await LeaveModel.create(leave).catch(console.log);
     if (newLeave) {
       return {
@@ -55,11 +55,19 @@ export class LeaveService {
     return null;
   }
 
-  static async delete(id: string): Promise<boolean> {
+  static async delete(id: string): Promise<LeaveDTO> {
     const deletedLeave = await LeaveModel.findByIdAndDelete(id).catch(
       console.log
     );
-    return !!deletedLeave;
+    if (!deletedLeave) {
+      return null;
+    }
+    return {
+      id: deletedLeave._id.toString(),
+      fullname: deletedLeave.fullname,
+      userId: deletedLeave.userId,
+      leave: deletedLeave.leave,
+    };
   }
 
   static async update(

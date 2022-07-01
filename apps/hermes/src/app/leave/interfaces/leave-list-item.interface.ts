@@ -1,6 +1,6 @@
 export interface LeaveListItem {
-  id: number;
-  userId: number;
+  id: string;
+  userId: string;
   fullname: string;
   leave: {
     from: Date;

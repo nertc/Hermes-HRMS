@@ -21,6 +21,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { InlineRangeCalendarComponent } from './inline-range-calendar/inline-range-calendar.component';
+import { OnlyDigitsDirective } from './directives/only-digits.directive';
 
 const exports = [
   CommonModule,
@@ -46,6 +47,7 @@ const exports = [
   RouterModule,
   MatCardModule,
   InlineRangeCalendarComponent,
+  OnlyDigitsDirective,
 ];
 
 @NgModule({
@@ -55,6 +57,7 @@ const exports = [
     GetPropertyPipe,
     StatusPipe,
     InlineRangeCalendarComponent,
+    OnlyDigitsDirective,
   ],
   imports: [CommonModule, MatDatepickerModule],
   exports: [...exports],

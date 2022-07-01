@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'hermes-menu',
@@ -11,6 +12,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class MenuComponent {
   @Output() openChanged = new EventEmitter<boolean>();
+
+  isEmployee: boolean;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -24,5 +27,10 @@ export class MenuComponent {
     this.openChanged.emit(matSidenav.opened);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private userService: UserService
+  ) {
+    this.isEmployee = userService.isEmployee();
+  }
 }

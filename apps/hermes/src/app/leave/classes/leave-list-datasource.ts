@@ -1,134 +1,11 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { LeaveListItem } from '../interfaces/leave-list-item.interface';
 import { EventEmitter } from '@angular/core';
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: LeaveListItem[] = [
-  {
-    id: 1,
-    fullname: 'Hydrogen',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 2,
-    fullname: 'Helium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 3,
-    fullname: 'Lithium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 4,
-    fullname: 'Beryllium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 5,
-    fullname: 'Boron',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 6,
-    fullname: 'Carbon',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 7,
-    fullname: 'Nitrogen',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 8,
-    fullname: 'Oxygen',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 9,
-    fullname: 'Fluorine',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 10,
-    fullname: 'Neon',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 11,
-    fullname: 'Sodium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 12,
-    fullname: 'Magnesium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 13,
-    fullname: 'Aluminum',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 14,
-    fullname: 'Silicon',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 15,
-    fullname: 'Phosphorus',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 16,
-    fullname: 'Sulfur',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 17,
-    fullname: 'Chlorine',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 18,
-    fullname: 'Argon',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 19,
-    fullname: 'Potassium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-  {
-    id: 20,
-    fullname: 'Calcium',
-    leave: { from: new Date(2022, 5, 15), to: new Date(2022, 5, 25) },
-    userId: 5,
-  },
-];
+import { LeaveService } from '../leave.service';
 
 /**
  * Data source for the LeaveList view. This class should
@@ -136,13 +13,20 @@ const EXAMPLE_DATA: LeaveListItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class LeaveListDataSource extends DataSource<LeaveListItem> {
-  data: LeaveListItem[] = EXAMPLE_DATA;
+  data: LeaveListItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   dataChanged = new EventEmitter<boolean>();
 
-  constructor() {
+  constructor(private leaveService: LeaveService) {
     super();
+    leaveService
+      .getList()
+      .pipe(
+        tap((leaves) => (this.data = leaves)),
+        tap(() => this.dataChanged.emit(true))
+      )
+      .subscribe();
   }
 
   /**
@@ -212,7 +96,7 @@ export class LeaveListDataSource extends DataSource<LeaveListItem> {
     });
   }
 
-  public deleteLeave(id: number): void {
+  public deleteLeave(id: string): void {
     this.data = this.data.filter((lv) => lv.id !== id);
     this.dataChanged.emit(true);
   }

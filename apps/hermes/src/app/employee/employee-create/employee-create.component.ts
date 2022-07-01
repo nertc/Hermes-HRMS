@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as e from 'express';
 import { tap } from 'rxjs';
 import { EmployeeService } from '../employee.service';
 
@@ -28,7 +29,7 @@ export class EmployeeCreateComponent {
           Validators.pattern(/^(\+995)?\d{3}(-?\d{2}){3}$/g),
         ],
       ],
-      salary: ['', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/g)]],
+      salary: ['', [Validators.required]],
     });
   }
 

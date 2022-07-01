@@ -21,16 +21,18 @@
         >Salaries</a
       >
       <a
+        *ngIf="isEmployee"
         mat-list-item
         [routerLink]="['/leave/request']"
         routerLinkActive="router-link-active"
         >Leave</a
       >
       <a
+        *ngIf="!isEmployee"
         mat-list-item
         [routerLink]="['/leave/management']"
         routerLinkActive="router-link-active"
-        >Leave m</a
+        >Leaves</a
       >
     </mat-nav-list>
     <div class="footer">© David Tsiklauri 2022</div>

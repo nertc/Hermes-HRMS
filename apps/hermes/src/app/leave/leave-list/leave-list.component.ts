@@ -22,7 +22,7 @@ export class LeaveListComponent implements AfterViewInit {
   displayedColumns = ['id', 'name', 'leave', 'accept', 'reject'];
 
   constructor(private leaveService: LeaveService) {
-    this.dataSource = new LeaveListDataSource();
+    this.dataSource = new LeaveListDataSource(leaveService);
   }
 
   ngAfterViewInit(): void {
@@ -31,14 +31,14 @@ export class LeaveListComponent implements AfterViewInit {
     this.table.dataSource = this.dataSource;
   }
 
-  public accept(id: number): void {
+  public accept(id: string): void {
     this.leaveService
       .accept(id)
       .pipe(tap(() => this.dataSource.deleteLeave(id)))
       .subscribe();
   }
 
-  public reject(id: number): void {
+  public reject(id: string): void {
     this.leaveService
       .reject(id)
       .pipe(tap(() => this.dataSource.deleteLeave(id)))
