@@ -1,315 +1,11 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Observable, of as observableOf, merge, of } from 'rxjs';
-import { UserStatus } from '@hermes/interfaces';
 import { EmployeeItem } from '../interfaces/employee-item.interface';
 import { EventEmitter } from '@angular/core';
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: EmployeeItem[] = [
-  {
-    id: 1,
-    fullname: 'Hydrogen',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 2,
-    fullname: 'Helium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 3,
-    fullname: 'Lithium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 4,
-    fullname: 'Beryllium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 5,
-    fullname: 'Boron',
-    role: UserStatus.MANAGER,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 6,
-    fullname: 'Carbon',
-    role: UserStatus.ADMIN,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 7,
-    fullname: 'Nitrogen',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 8,
-    fullname: 'Oxygen',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 9,
-    fullname: 'Fluorine',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 10,
-    fullname: 'Neon',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 11,
-    fullname: 'Sodium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 12,
-    fullname: 'Magnesium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 13,
-    fullname: 'Aluminum',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 14,
-    fullname: 'Silicon',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 15,
-    fullname: 'Phosphorus',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 16,
-    fullname: 'Sulfur',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 17,
-    fullname: 'Chlorine',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 18,
-    fullname: 'Argon',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 19,
-    fullname: 'Potassium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-  {
-    id: 20,
-    fullname: 'Calcium',
-    role: UserStatus.EMPLOYEE,
-    total: 23,
-    leave: {
-      from: new Date(2022, 5, 15),
-      to: new Date(2022, 5, 22),
-    },
-    working: 18,
-    salary: 500,
-    currency: '₾',
-    attandence: true,
-    phone: '557-13-57-45',
-  },
-];
+import { EmployeeService } from '../employee.service';
 
 /**
  * Data source for the Employee view. This class should
@@ -317,16 +13,24 @@ const EXAMPLE_DATA: EmployeeItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class EmployeeDataSource extends DataSource<EmployeeItem> {
-  data: EmployeeItem[] = EXAMPLE_DATA;
+  data: EmployeeItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   dataChanged = new EventEmitter<boolean>();
-  search: Observable<string>;
   filter = '';
 
-  constructor(search?: Observable<string>) {
+  constructor(
+    private employeeService: EmployeeService,
+    public search: Observable<string> = of()
+  ) {
     super();
-    this.search = search || of();
+    employeeService
+      .getList()
+      .pipe(
+        tap((employee) => (this.data = employee)),
+        tap(() => this.dataChanged.emit(true))
+      )
+      .subscribe();
   }
 
   /**
@@ -409,17 +113,17 @@ export class EmployeeDataSource extends DataSource<EmployeeItem> {
     });
   }
 
-  public changeEmployee(id: number, employee: EmployeeItem): void {
+  public changeEmployee(id: string, employee: EmployeeItem): void {
     const index = this.data.findIndex((emp) => emp.id === id);
     this.data[index] = employee;
     this.dataChanged.emit(true);
   }
 
-  public getEmployee(id: number): EmployeeItem | undefined {
+  public getEmployee(id: string): EmployeeItem | undefined {
     return this.data.find((emp) => emp.id === id);
   }
 
-  public deleteEmployee(id: number): void {
+  public deleteEmployee(id: string): void {
     this.data = this.data.filter((emp) => emp.id !== id);
     this.dataChanged.emit(true);
   }

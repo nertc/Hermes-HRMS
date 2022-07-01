@@ -70,6 +70,7 @@ export class EmployeeListComponent implements AfterViewInit, OnInit {
     private employeeService: EmployeeService
   ) {
     this.dataSource = new EmployeeDataSource(
+      this.employeeService,
       this.searchControl.valueChanges.pipe(
         filter((v) => v !== null)
       ) as Observable<string>
@@ -103,7 +104,7 @@ export class EmployeeListComponent implements AfterViewInit, OnInit {
     this.table.dataSource = this.dataSource;
   }
 
-  public changeRole(id: number, newRole: UserStatus, matSelect: MatSelect) {
+  public changeRole(id: string, newRole: UserStatus, matSelect: MatSelect) {
     this.employeeService
       .change(id, { role: newRole })
       .pipe(
@@ -116,7 +117,7 @@ export class EmployeeListComponent implements AfterViewInit, OnInit {
   }
 
   public changeAttandence(
-    id: number,
+    id: string,
     newAttandence: boolean,
     matSlideToggle: MatSlideToggle
   ) {
@@ -131,7 +132,7 @@ export class EmployeeListComponent implements AfterViewInit, OnInit {
       .subscribe();
   }
 
-  public remove(id: number): void {
+  public remove(id: string): void {
     this.employeeService
       .delete(id)
       .pipe(tap(() => this.dataSource.deleteEmployee(id)))

@@ -5,6 +5,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { ErrorMessage } from '@hermes/interfaces';
 import { logoutRoute } from './app/logout/logout.routes';
+import { employeeRoute } from './app/employee/employee.routes';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use('/api/login', loginRoute);
 app.use('/api/logout', logoutRoute);
+app.use('/api/employee', employeeRoute);
 
 app.use((err, res) => {
   res.status(404).send({ message: 'Not found bro' } as ErrorMessage);

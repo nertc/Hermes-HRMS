@@ -1,11 +1,11 @@
 import { UserStatus } from '@hermes/interfaces';
 
 export interface EmployeeItem {
-  id: number;
+  id: string;
   fullname: string;
   role: UserStatus;
   total: number;
-  leave: {
+  leave?: {
     from: Date;
     to: Date;
   };

@@ -4,3 +4,4 @@ export * from './single/put/employee-put-response.interface';
 export * from './single/post/employee-post-request.interface';
 export * from './single/post/employee-post-response.interface';
 export * from './single/delete/employee-delete-response.interface';
+export * from './employee-list-response.interface';

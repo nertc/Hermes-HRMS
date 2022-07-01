@@ -1,11 +1,11 @@
 import { UserStatus } from '../../login';
 
 export interface EmployeeSingleResponse {
-  id: number;
+  id: string;
   fullname: string;
   role: UserStatus;
   total: number;
-  leave: {
+  leave?: {
     from: number;
     to: number;
   };

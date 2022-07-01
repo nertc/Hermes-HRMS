@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   EmployeeDeleteResponse,
+  EmployeeListResponse,
   EmployeePostRequest,
   EmployeePostResponse,
   EmployeePutRequest,
@@ -16,24 +17,50 @@ import { EmployeeItem } from './interfaces/employee-item.interface';
 export class EmployeeService {
   constructor(private http: HttpClient) {}
 
+  public getList(): Observable<EmployeeItem[]> {
+    return this.http.get<EmployeeListResponse>(API_URLS.employee).pipe(
+      map((users) =>
+        users.map((user) => {
+          const newUser: EmployeeItem = {
+            ...user,
+            leave: undefined,
+          };
+          if (user.leave) {
+            newUser.leave = {
+              from: new Date(user.leave.from),
+              to: new Date(user.leave.to),
+            };
+          }
+          return newUser;
+        })
+      )
+    );
+  }
+
   public change(
-    id: number,
+    id: string,
     employee: EmployeePutRequest
   ): Observable<EmployeeItem> {
     return this.http
       .put<EmployeePutResponse>(`${API_URLS.employee}/${id}`, employee)
       .pipe(
-        map((emp) => ({
-          ...emp,
-          leave: {
-            from: new Date(emp.leave.from),
-            to: new Date(emp.leave.to),
-          },
-        }))
+        map((emp) => {
+          const newEmp: EmployeeItem = {
+            ...emp,
+            leave: undefined,
+          };
+          if (emp.leave) {
+            newEmp.leave = {
+              from: new Date(emp.leave.from),
+              to: new Date(emp.leave.to),
+            };
+          }
+          return newEmp;
+        })
       );
   }
 
-  public delete(id: number): Observable<EmployeeDeleteResponse> {
+  public delete(id: string): Observable<EmployeeDeleteResponse> {
     return this.http.delete<EmployeeDeleteResponse>(
       `${API_URLS.employee}/${id}`
     );
