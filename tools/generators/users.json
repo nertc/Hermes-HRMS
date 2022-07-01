@@ -1,0 +1,42 @@
+[
+  {
+    "username": "admin",
+    "password": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+    "firstname": "David",
+    "lastname": "Tsiklauri",
+    "status": 2,
+    "salary": 5000,
+    "phone": "558123456",
+    "total": 15,
+    "working": 15,
+    "attandence": true
+  },
+  {
+    "username": "manager",
+    "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "firstname": "Mary",
+    "lastname": "Harry",
+    "status": 1,
+    "salary": 2000,
+    "phone": "558654321",
+    "total": 25,
+    "working": 25,
+    "attandence": true
+  },
+  {
+    "username": "employee",
+    "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "firstname": "Lorry",
+    "lastname": "Forry",
+    "status": 0,
+    "salary": 2000,
+    "phone": "558147852",
+    "total": 25,
+    "leave": {
+      "from": 1657569600000,
+      "to": 1657915200000
+    },
+    "working": 21,
+    "attandence": false
+  }
+]
